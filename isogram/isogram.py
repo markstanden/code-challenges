@@ -10,8 +10,7 @@ def is_isogram(string: str) -> bool:
     # clean the input - Remove spaces, hyphens, standardise the case
     clean_string = string.replace(" ", "")
     clean_string = clean_string.replace("-", "")
-    test_string = clean_string.lower()
-    print(clean_string)
+    test_string = clean_string.casefold()
 
     # check the cleaned string
     if not test_string.isalpha:
