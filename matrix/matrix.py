@@ -1,3 +1,6 @@
+from typing import Iterable, Any, overload
+
+
 class Matrix:
     def __init__(self, matrix_string: str) -> None:
         # First we split the matrix string into rows of strings
@@ -34,23 +37,24 @@ class Matrix:
         return Column(self.values, index)
 
 
-class Column(list[int]):
-    def __init__(self, values: list[list[int]], col: int) -> None:
+class Column(list):
+    def __init__(self, values: list[list[Any]], col: int) -> None:
         # set instance variables for the column
         ## self.values is a reference to the matrix data to get the column from
         self.values = values
         ## this is the zero indexed reference to the column we are interested in
         self.col_index = col
 
-        # create a column list and add to the parent list
-        super().extend([row[self.col_index] for row in self.values])
+        # initialise the parent list with the column data
+        super().__init__([row[self.col_index] for row in self.values])
 
-    def __setitem__(self, index: int, value: int) -> None:
+    @overload
+    def __setitem__(self, index: slice, value: Iterable[Any]) -> None:
         # if we change a value in the column list,
         # we want out changes to be reflected in the matrix data
         self.values[index][self.col_index] = value
 
-    def __getitem__(self, index: int) -> int:
+    def __getitem__(self, index: slice) -> list[Any]:
         return self.values[index][self.col_index]
 
 
@@ -73,3 +77,10 @@ def test_col():
     matrix.column(1)[2] = 6
     print(matrix)
     assert matrix.column(1) == [1, 4, 6]
+
+new = Matrix("1 2 3\n4 5 6\n7 8 9")
+print(new)
+print(new.column(1))
+new.column(1)[1] = 5
+print(new)
+print(new.column(1))
