@@ -1,0 +1,8 @@
+**/.exercism
+**/.idea*
+**/*gradle*
+**/HELP.md
+**/HINTS.md
+**/target
+**/lib
+**/build
