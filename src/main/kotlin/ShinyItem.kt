@@ -4,4 +4,8 @@ data class ShinyItem(val name: String, val volume: Double, val cost: Double) : I
 
     override fun getImportance(): Number =
         cost
+
+    override fun toString(): String {
+        return name
+    }
 }
