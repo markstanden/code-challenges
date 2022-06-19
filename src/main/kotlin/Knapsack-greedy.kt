@@ -6,11 +6,9 @@ tailrec fun Set<Items>.greedilyFillKnapsack(
 ): Set<Items> {
     val remainingCapacity = capacity - currentItems.sumOf { it.getConstraint().toDouble() }
 
-    val nextItems = this.filter { it.getConstraint().toDouble() <= remainingCapacity }.toList()
-    if (nextItems.isEmpty()) return currentItems
-
-    val nextItem = nextItems.maxBy {
+    val nextItem = this.filter { it.getConstraint().toDouble() <= remainingCapacity }.maxByOrNull {
         it.getImportance().toDouble()
-    }
+    } ?: return currentItems
+
     return this.without(nextItem).greedilyFillKnapsack(capacity, currentItems + nextItem)
 }

@@ -1,3 +1,4 @@
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -62,20 +63,20 @@ class KnapsackTest {
                     Arguments.of(4.9, setOf(gem, mobile)),
                     Arguments.of(5.0, setOf(gem, mobile)),
                     Arguments.of(5.9, setOf(gem, mobile)),
-                    Arguments.of(6.0, setOf(laptop)),
-                    Arguments.of(6.9, setOf(laptop)),
+                    Arguments.of(6.0, setOf(gem, mobile, headphones)),
+                    Arguments.of(6.9, setOf(gem, mobile, headphones)),
                     Arguments.of(7.0, setOf(laptop, gem)),
                     Arguments.of(7.9, setOf(laptop, gem)),
                     Arguments.of(10.0, setOf(laptop, mobile, gem)),
                     Arguments.of(10.9, setOf(laptop, mobile, gem)),
-                    Arguments.of(20.0, setOf(laptop, mobile, gem, guitar)),
-                    Arguments.of(20.9, setOf(laptop, mobile, gem, guitar)),
+                    Arguments.of(20.0, setOf(laptop, mobile, gem, headphones, book)),
+                    Arguments.of(20.9, setOf(laptop, mobile, gem, headphones, book)),
                     Arguments.of(30.0, setOf(laptop, mobile, gem, guitar, headphones, book)),
                     Arguments.of(30.9, setOf(laptop, mobile, gem, guitar, headphones, book)),
-                    Arguments.of(40.0, setOf(television)),
-                    Arguments.of(40.9, setOf(television)),
-                    Arguments.of(41.0, setOf(television, gem)),
-                    Arguments.of(41.9, setOf(television, gem)),
+                    Arguments.of(40.0, setOf(gem, headphones, mobile, book, laptop, guitar)),
+                    Arguments.of(40.9, setOf(gem, headphones, mobile, book, laptop, guitar)),
+                    Arguments.of(41.0, setOf(gem, headphones, mobile, book, laptop, guitar)),
+                    Arguments.of(41.9, setOf(gem, headphones, mobile, book, laptop, guitar)),
             )
 
 
@@ -84,6 +85,21 @@ class KnapsackTest {
     @ParameterizedTest
     @MethodSource("greedyResults")
     fun greedilyFillKnapsack(size: Double, items: Set<Items>) {
-        assertEquals(items, baseItems.greedilyFillKnapsack(size, emptySet()))
+        assertEquals(items, baseItems.greedilyFillKnapsack(size))
+    }
+
+    @ParameterizedTest
+    @MethodSource("bestResults")
+    fun bruteForceFillKnapsack(size: Double, items: Set<Items>) {
+        assertEquals(items, baseItems.bruteForceFillKnapsack(size))
+    }
+
+    @Test
+    fun allCombinations() {
+        assertEquals(
+                setOf(setOf(1), setOf(2), setOf(3), setOf(1, 2), setOf(1, 3), setOf(2, 3), setOf(1, 2, 3)), setOf(
+                1, 2, 3
+        ).allCombinations()
+        )
     }
 }
