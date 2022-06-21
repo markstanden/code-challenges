@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -91,7 +90,7 @@ class KnapsackTest {
     @ParameterizedTest
     @MethodSource("bestResults")
     fun bruteForceFillKnapsack(size: Double, items: Set<Items>) {
-        val bestItems = baseItems.bruteForceFillKnapsack(size, allCombinations)
+        val bestItems = baseItems.bruteForceFillKnapsack(size, allCombinations<Items>)
         assertEquals(items, bestItems)
     }
 }

@@ -20,7 +20,8 @@ fun <T> Set<T>.naiveAllCombinations(): Set<Set<T>> {
 /**
  * recursively, progressively generates all valid subsets.  This is far faster than brute force.
  */
-val <T> Set<T>.combinations = allCombinations(this)
+val <T> Set<T>.combinations: Set<Set<T>>
+    get() = allCombinations<T>(this)
 
 
 tailrec fun <T> allCombinations(remaining: Set<T>, currentCombinations: Set<Set<T>> = emptySet()): Set<Set<T>> {

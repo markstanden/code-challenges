@@ -2,7 +2,8 @@
  * Returns a perfectly filled knapsack, trying all combinations and returning the highest value knapsack.
  */
 fun Set<Items>.bruteForceFillKnapsack(
-        capacity: Double, combinationsProducer: (Set<Items>) -> Set<Set<Items>>,
+        capacity: Double,
+        combinationsProducer: (Set<Items>) -> Set<Set<Items>>,
 ): Set<Items> {
     val items = combinationsProducer(this.toSet())
     return items.asSequence()

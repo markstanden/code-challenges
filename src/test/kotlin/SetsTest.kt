@@ -61,7 +61,7 @@ class SetsTest {
     @ParameterizedTest
     @MethodSource("combinations", "biggerCombinations", /*"evenBiggerCombinations"*/)
     fun `allCombinations of the integer ranges 1 - x (inclusive)`(numberOfItems: Int, expected: Int) {
-        assertEquals(expected, 1.rangeTo(numberOfItems).toSet().allCombinations().size)
+        assertEquals(expected, 1.rangeTo(numberOfItems).toSet().combinations().size)
 
     }
 
@@ -70,7 +70,7 @@ class SetsTest {
         assertEquals(
                 setOf(setOf(1), setOf(2), setOf(3), setOf(1, 2), setOf(1, 3), setOf(2, 3), setOf(1, 2, 3)), setOf(
                 1, 2, 3
-        ).allCombinations()
+        ).combinations()
         )
     }
 }
