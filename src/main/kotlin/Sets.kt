@@ -10,12 +10,23 @@ fun <T> Set<T>.without(item: T) =
 /**
  * Recursively generates all valid subsets
  */
-fun <T> Set<T>.allCombinations(): Set<Set<T>> {
-    return if (this.isEmpty()) emptySet()
-    else this.asSequence()
-        .flatMap {
-            this.without(it).allCombinations()
-        }
-        .toSet()
-        .plusElement(this)
+fun <T> Set<T>.naiveAllCombinations(): Set<Set<T>> {
+    return if (this.size == 1) setOf(this)
+    else this.asSequence().flatMap {
+        this.without(it).naiveAllCombinations()
+    }.toSet().plusElement(this)
+}
+
+/**
+ * recursively, progressively generates all valid subsets.  This is far faster than brute force.
+ */
+val <T> Set<T>.combinations = allCombinations(this)
+
+
+tailrec fun <T> allCombinations(remaining: Set<T>, currentCombinations: Set<Set<T>> = emptySet()): Set<Set<T>> {
+    if (remaining.isEmpty()) return currentCombinations
+    val next: T = remaining.first()
+    val newCombinations =
+        (currentCombinations.plusElement(emptySet())).asSequence().map { it.plusElement(next) }.toSet()
+    return allCombinations(remaining.without(next), currentCombinations + newCombinations)
 }

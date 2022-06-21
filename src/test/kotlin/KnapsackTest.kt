@@ -91,15 +91,7 @@ class KnapsackTest {
     @ParameterizedTest
     @MethodSource("bestResults")
     fun bruteForceFillKnapsack(size: Double, items: Set<Items>) {
-        assertEquals(items, baseItems.bruteForceFillKnapsack(size))
-    }
-
-    @Test
-    fun allCombinations() {
-        assertEquals(
-                setOf(setOf(1), setOf(2), setOf(3), setOf(1, 2), setOf(1, 3), setOf(2, 3), setOf(1, 2, 3)), setOf(
-                1, 2, 3
-        ).allCombinations()
-        )
+        val bestItems = baseItems.bruteForceFillKnapsack(size, allCombinations)
+        assertEquals(items, bestItems)
     }
 }

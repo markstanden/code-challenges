@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="SetsTest" tests="21" skipped="0" failures="0" errors="0" timestamp="2022-06-19T10:10:47" hostname="laptop" time="1.011">
+  <properties/>
+  <testcase name="allCombinations of the range 1-3 inclusive()" classname="SetsTest" time="0.05"/>
+  <testcase name="[1] 3, 7" classname="SetsTest" time="0.022"/>
+  <testcase name="[2] 4, 15" classname="SetsTest" time="0.001"/>
+  <testcase name="[3] 5, 31" classname="SetsTest" time="0.002"/>
+  <testcase name="[4] 6, 63" classname="SetsTest" time="0.002"/>
+  <testcase name="[5] 7, 127" classname="SetsTest" time="0.003"/>
+  <testcase name="[6] 8, 255" classname="SetsTest" time="0.004"/>
+  <testcase name="[7] 9, 511" classname="SetsTest" time="0.008"/>
+  <testcase name="[8] 10, 1023" classname="SetsTest" time="0.015"/>
+  <testcase name="[9] 11, 2047" classname="SetsTest" time="0.025"/>
+  <testcase name="[10] 12, 4095" classname="SetsTest" time="0.034"/>
+  <testcase name="[11] 13, 8191" classname="SetsTest" time="0.076"/>
+  <testcase name="[12] 14, 16383" classname="SetsTest" time="0.251"/>
+  <testcase name="naiveAllCombinations of the range 1-3 inclusive()" classname="SetsTest" time="0.003"/>
+  <testcase name="[1] 3, 7" classname="SetsTest" time="0.0"/>
+  <testcase name="[2] 4, 15" classname="SetsTest" time="0.001"/>
+  <testcase name="[3] 5, 31" classname="SetsTest" time="0.002"/>
+  <testcase name="[4] 6, 63" classname="SetsTest" time="0.006"/>
+  <testcase name="[5] 7, 127" classname="SetsTest" time="0.018"/>
+  <testcase name="[6] 8, 255" classname="SetsTest" time="0.079"/>
+  <testcase name="[7] 9, 511" classname="SetsTest" time="0.359"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
