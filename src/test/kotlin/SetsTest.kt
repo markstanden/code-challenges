@@ -1,3 +1,5 @@
+import PureSets.allCombinations
+import PureSets.naiveAllCombinations
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -45,32 +47,38 @@ class SetsTest {
     @ParameterizedTest
     @MethodSource("combinations")
     fun `naiveAllCombinations of the integer ranges 1 - x (inclusive)`(numberOfItems: Int, expected: Int) {
-        assertEquals(expected, 1.rangeTo(numberOfItems).toSet().naiveAllCombinations().size)
+        assertEquals(expected, naiveAllCombinations(1.rangeTo(numberOfItems).toSet()).size)
 
     }
 
     @Test
     fun `naiveAllCombinations of the range 1-3 inclusive`() {
         assertEquals(
-                setOf(setOf(1), setOf(2), setOf(3), setOf(1, 2), setOf(1, 3), setOf(2, 3), setOf(1, 2, 3)), setOf(
-                1, 2, 3
-        ).naiveAllCombinations()
+                setOf(setOf(1), setOf(2), setOf(3), setOf(1, 2), setOf(1, 3), setOf(2, 3), setOf(1, 2, 3)),
+                naiveAllCombinations(
+                        setOf(
+                                1, 2, 3
+                        )
+                )
         )
     }
 
     @ParameterizedTest
-    @MethodSource("combinations", "biggerCombinations", /*"evenBiggerCombinations"*/)
+    @MethodSource("combinations", "biggerCombinations" /*"evenBiggerCombinations"*/)
     fun `allCombinations of the integer ranges 1 - x (inclusive)`(numberOfItems: Int, expected: Int) {
-        assertEquals(expected, 1.rangeTo(numberOfItems).toSet().combinations().size)
+        assertEquals(expected, allCombinations(1.rangeTo(numberOfItems).toSet()).size)
 
     }
 
     @Test
     fun `allCombinations of the range 1-3 inclusive`() {
         assertEquals(
-                setOf(setOf(1), setOf(2), setOf(3), setOf(1, 2), setOf(1, 3), setOf(2, 3), setOf(1, 2, 3)), setOf(
-                1, 2, 3
-        ).combinations()
+                setOf(setOf(1), setOf(2), setOf(3), setOf(1, 2), setOf(1, 3), setOf(2, 3), setOf(1, 2, 3)),
+                allCombinations(
+                        setOf(
+                                1, 2, 3
+                        )
+                )
         )
     }
 }

@@ -1,3 +1,5 @@
+import PureSets.without
+
 /**
  * Returns a greedily filled knapsack, filling with the largest value items it can find.
  */

@@ -1,3 +1,5 @@
+package PureSets
+
 /**
  * Returns a set without the passed item present.
  * If the item is not present, a copy of the original set is returned.
@@ -10,20 +12,16 @@ fun <T> Set<T>.without(item: T) =
 /**
  * Recursively generates all valid subsets
  */
-fun <T> Set<T>.naiveAllCombinations(): Set<Set<T>> {
-    return if (this.size == 1) setOf(this)
-    else this.asSequence().flatMap {
-        this.without(it).naiveAllCombinations()
-    }.toSet().plusElement(this)
+fun <T> naiveAllCombinations(remaining: Set<T>): Set<Set<T>> {
+    return if (remaining.size == 1) setOf(remaining)
+    else remaining.asSequence().flatMap {
+        naiveAllCombinations(remaining.without(it))
+    }.toSet().plusElement(remaining)
 }
 
 /**
  * recursively, progressively generates all valid subsets.  This is far faster than brute force.
  */
-val <T> Set<T>.combinations: Set<Set<T>>
-    get() = allCombinations<T>(this)
-
-
 tailrec fun <T> allCombinations(remaining: Set<T>, currentCombinations: Set<Set<T>> = emptySet()): Set<Set<T>> {
     if (remaining.isEmpty()) return currentCombinations
     val next: T = remaining.first()

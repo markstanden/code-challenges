@@ -1,10 +1,11 @@
+import PureSets.allCombinations
+import PureSets.naiveAllCombinations
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import kotlin.test.assertEquals
 
 class KnapsackTest {
-
 
     companion object {
         private val gem = ShinyItem("Gem", 1.0, 500.0)
@@ -89,8 +90,15 @@ class KnapsackTest {
 
     @ParameterizedTest
     @MethodSource("bestResults")
-    fun bruteForceFillKnapsack(size: Double, items: Set<Items>) {
-        val bestItems = baseItems.bruteForceFillKnapsack(size, allCombinations<Items>)
+    fun bruteForceProgressivelyFillKnapsack(size: Double, items: Set<Items>) {
+        val bestItems = baseItems.bruteForceFillKnapsack(size, ::allCombinations)
+        assertEquals(items, bestItems)
+    }
+
+    @ParameterizedTest
+    @MethodSource("bestResults")
+    fun bruteForceNaiveFillKnapsack(size: Double, items: Set<Items>) {
+        val bestItems = baseItems.bruteForceFillKnapsack(size, ::naiveAllCombinations)
         assertEquals(items, bestItems)
     }
 }
