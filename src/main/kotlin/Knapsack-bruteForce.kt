@@ -3,9 +3,9 @@
  */
 fun Set<Items>.bruteForceFillKnapsack(
         capacity: Double,
-        combinationsProducer: Set<Items>.() -> Set<Set<Items>>,
+        combinationsProducer: CombinationProducer<Items>,
 ): Set<Items> {
-    val items = combinationsProducer.invoke(this.toSet())
+    val items = combinationsProducer(this.toSet())
     return items.asSequence()
         .filter { combination -> combination.sumOf { it.getConstraint().toDouble() } <= capacity }
         .maxByOrNull { combination -> combination.sumOf { it.getImportance().toDouble() } } ?: emptySet()

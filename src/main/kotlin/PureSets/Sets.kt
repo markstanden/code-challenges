@@ -19,6 +19,7 @@ fun <T> naiveAllCombinations(remaining: Set<T>): Set<Set<T>> {
     }.toSet().plusElement(remaining)
 }
 
+
 /**
  * recursively, progressively generates all valid subsets.  This is far faster than brute force.
  */
