@@ -13,7 +13,7 @@ Given a valid grid and an invalid grid correctly identify the invalid grid by ch
 
 A valid row, column and block contains 9 values - each of the values between 1-9 (inclusive) without duplication.
 
-### Valid Sudoku Grid.Grid
+### Valid Sudoku Grid.
 
 |     |     |     |     |     |     |     |     |     |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -27,7 +27,7 @@ A valid row, column and block contains 9 values - each of the values between 1-9
 |  9  |  5  |  4  |  1  |  8  |  2  |  6  |  7  |  3  |
 |  3  |  2  |  6  |  9  |  5  |  7  |  8  |  1  |  4  |
 
-### Invalid Sudoku Grid.Grid
+### Invalid Sudoku Grid.
 
 |       |     |     |     |     |     |     |     |     |
 |:-----:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
