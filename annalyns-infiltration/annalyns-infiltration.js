@@ -1,4 +1,4 @@
-// @ts-check
+//@ts-check
 //
 // ☝🏽 The line above enables type checking for this file. Various IDEs interpret
 // the @ts-check directive. It will give you helpful autocompletion on the web
@@ -27,7 +27,7 @@
  * @return {boolean} Whether or not you can execute a fast attack.
  */
 export function canExecuteFastAttack(knightIsAwake) {
-  throw new Error('Remove this line and implement the function');
+    return !knightIsAwake
 }
 
 /**
@@ -40,7 +40,10 @@ export function canExecuteFastAttack(knightIsAwake) {
  * @returns {boolean} Whether or not you can spy on someone.
  */
 export function canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake) {
-  throw new Error('Remove this line and implement the function');
+    let someoneIsAwake = prisonerIsAwake || knightIsAwake || archerIsAwake
+    let allAreAwake = prisonerIsAwake && knightIsAwake && archerIsAwake
+    let onlyOneSoldier = !(archerIsAwake && knightIsAwake)
+    return (someoneIsAwake && onlyOneSoldier) || allAreAwake
 }
 
 /**
@@ -52,7 +55,7 @@ export function canSpy(knightIsAwake, archerIsAwake, prisonerIsAwake) {
  * @returns {boolean} Whether or not you can send a signal to the prisoner.
  */
 export function canSignalPrisoner(archerIsAwake, prisonerIsAwake) {
-  throw new Error('Remove this line and implement the function');
+    return prisonerIsAwake && !archerIsAwake
 }
 
 /**
@@ -66,10 +69,10 @@ export function canSignalPrisoner(archerIsAwake, prisonerIsAwake) {
  * @returns {boolean} Whether or not you can free Annalyn's friend.
  */
 export function canFreePrisoner(
-  knightIsAwake,
-  archerIsAwake,
-  prisonerIsAwake,
-  petDogIsPresent
+    knightIsAwake,
+    archerIsAwake,
+    prisonerIsAwake,
+    petDogIsPresent
 ) {
-  throw new Error('Remove this line and implement the function');
+    return !archerIsAwake && (petDogIsPresent || (prisonerIsAwake && !knightIsAwake))
 }
