@@ -57,18 +57,9 @@ export function errorMessage(input) {
     
     if (cleanedInput) {
         // input is not falsy so is defined in some way.
-
         const parsed = Number(cleanedInput)
-
-        if (parsed && parsed !== 0) {
-            // String is some kind number, and not 0
-            result = NO_ERROR
-        }
-        else {
-            // NaN, or 0
-            result = ERROR_NAN
-        }
+        // With a ternary operator to clean the logic up
+        result = (parsed && parsed !== 0) ? NO_ERROR : ERROR_NAN
     }
-
     return result
 }
