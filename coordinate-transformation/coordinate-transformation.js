@@ -5,7 +5,7 @@
 // implementing this exercise.
 
 /**
- * Create a function that returns a function making use of a closure to
+ * Returns a function making use of a closure to
  * perform a repeatable 2d translation of a coordinate pair.
  *
  * @param {number} dx the translate x component
@@ -15,7 +15,16 @@
  *  translated coordinate pair in the form [x, y]
  */
 export function translate2d(dx, dy) {
-  throw new Error('Implement the translate2d function');
+  /**
+   * Function that performs a repeatable 2d translation
+   * of a cartesian coordinate pair.
+   * @param x {number}
+   * @param y {number}
+   * @returns {[number, number]}
+   */
+  return (x, y) => {
+    return [x + dx, y + dy]
+  }
 }
 
 /**
@@ -29,7 +38,16 @@ export function translate2d(dx, dy) {
  *  scaled coordinate pair in the form [x, y]
  */
 export function scale2d(sx, sy) {
-  throw new Error('Implement the scale2d function');
+  /**
+   * Function that performs a repeatable scaling
+   * of a cartesian coordinate pair.
+   * @param x {number}
+   * @param y {number}
+   * @returns {[number, number]}
+   */
+  return (x, y) => {
+    return [x * sx, y * sy]
+  }
 }
 
 /**
