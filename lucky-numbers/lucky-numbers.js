@@ -52,15 +52,20 @@ export function errorMessage(input) {
 
     let result = NO_INPUT
 
-    if (input) {
-        const cleanedInput = input.trim()
+    // You can only trim a defined value
+    const cleanedInput = input?.trim()
+    
+    if (cleanedInput) {
+        // input is not falsy so is defined in some way.
 
-        // Digits and decimal points only
-        let regex = /\D\../
+        const parsed = Number(cleanedInput)
 
-        result = NO_ERROR
-
-        if (!regex.test(cleanedInput) || cleanedInput === "0") {
+        if (parsed && parsed !== 0) {
+            // String is some kind number, and not 0
+            result = NO_ERROR
+        }
+        else {
+            // NaN, or 0
             result = ERROR_NAN
         }
     }
