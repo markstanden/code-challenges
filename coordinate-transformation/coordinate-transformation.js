@@ -61,7 +61,26 @@ export function scale2d(sx, sy) {
  *  transformed coordinate pair in the form [x, y]
  */
 export function composeTransform(f, g) {
-  throw new Error('Implement the composeTransform function');
+  return (x, y) => {
+    return g(...f(x, y))
+  }
+}
+
+
+/**
+ *
+ * @type {{
+ * result: [number|number] | undefined,
+ * f: function | undefined,
+ * x: number | undefined,
+ * y: number | undefined,
+ * }}
+ */
+const memoized = {
+  x : undefined,
+  y : undefined,
+  f : undefined,
+  result : undefined,
 }
 
 /**
@@ -74,5 +93,26 @@ export function composeTransform(f, g) {
  *  if the arguments are the same on subsequent calls, or compute a new result if they are different.
  */
 export function memoizeTransform(f) {
-  throw new Error('Implement the memoizeTransform function');
+  /**
+   * function to set the memoize object's values
+   * @param x {number}
+   * @param y {number}
+   * @param fun {function}
+   */
+  function memoize(x, y, fun) {
+    memoized.x = x
+    memoized.y = y
+    memoized.f = fun
+    memoized.result = fun(x,y)
+  }
+
+  return (x, y) => {
+    if(memoized.x === x && memoized.y === y && memoized.f === f) {
+      return memoized.result
+    }
+    else {
+      memoize(x,y,f)
+      return memoized.result
+    }
+  }
 }
