@@ -55,8 +55,8 @@ export function costOf(sign, currency) {
 
   /**
    * Calculates the cost of a sign based on the message length
-   * @param message
-   * @returns {number}
+   * @param {string} message
+   * @returns {number} The cost in currency of the sign
    */
   const calcCost = (message) => {
     const baseCost = 20
