@@ -13,7 +13,7 @@
  * @returns {number} position of the card in the stack
  */
 export function getCardPosition(stack, card) {
-  throw new Error('Implement the getCardPosition function');
+    return stack.indexOf(card)
 }
 
 /**
@@ -25,8 +25,22 @@ export function getCardPosition(stack, card) {
  * @returns {boolean} true if card is in the stack, false otherwise
  */
 export function doesStackIncludeCard(stack, card) {
-  throw new Error('Implement the doesStackIncludeCard function');
+    return stack.includes(card)
 }
+
+/**
+ * predicate returns true if value is even
+ * @param {number} value
+ * @returns {boolean}
+ */
+const isEven = value => value % 2 === 0
+
+/**
+ * predicate returns true if value is false
+ * @param {number} value
+ * @returns {boolean}
+ */
+const isOdd = value => value % 2 === 1
 
 /**
  * Determine if each card is even
@@ -36,7 +50,7 @@ export function doesStackIncludeCard(stack, card) {
  * @returns {boolean} true if all cards are even, false otherwise
  */
 export function isEachCardEven(stack) {
-  throw new Error('Implement the isEachCardEven function');
+    return stack.every(isEven)
 }
 
 /**
@@ -47,7 +61,7 @@ export function isEachCardEven(stack) {
  * @returns {boolean} true if the array contains odd card, false otherwise
  */
 export function doesStackIncludeOddCard(stack) {
-  throw new Error('Implement the doesStackIncludesOddCard function');
+    return stack.some(isOdd)
 }
 
 /**
@@ -58,7 +72,7 @@ export function doesStackIncludeOddCard(stack) {
  * @returns {number | undefined} the first odd value
  */
 export function getFirstOddCard(stack) {
-  throw new Error('Implement the getFirstOddCard function');
+    return stack.find(isOdd)
 }
 
 /**
@@ -69,5 +83,5 @@ export function getFirstOddCard(stack) {
  * @returns {number} position of the first card that is even
  */
 export function getFirstEvenCardPosition(stack) {
-  throw new Error('Implement the getFirstEvenCardPosition function');
+    return stack.findIndex(isEven)
 }
