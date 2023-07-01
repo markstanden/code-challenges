@@ -8,7 +8,14 @@
  */
 
 export function isValidCommand(command) {
-  throw new Error('Please implement the isValidCommand function');
+  /**
+   * Checks for the keyword/command "chatbot"
+   * at the start of the command string
+   * is case-insensitive.
+   * @type {RegExp}
+   */
+  const regex = /^chatbot/i
+  return regex.test(command)
 }
 
 /**
