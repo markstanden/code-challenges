@@ -11,7 +11,7 @@
  * @returns {string[]} new playlist with unique entries
  */
 export function removeDuplicates(playlist) {
-  throw new Error('Please implement the removeDuplicates function');
+    return [...new Set(playlist)]
 }
 
 /**
@@ -22,7 +22,8 @@ export function removeDuplicates(playlist) {
  * @returns {boolean} whether the track is in the playlist
  */
 export function hasTrack(playlist, track) {
-  throw new Error('Please implement the hasTrack function');
+    const playlistSet = new Set(playlist)
+    return playlistSet.has(track)
 }
 
 /**
@@ -33,7 +34,8 @@ export function hasTrack(playlist, track) {
  * @returns {string[]} new playlist
  */
 export function addTrack(playlist, track) {
-  throw new Error('Please implement the addTrack function');
+    const playlistSet = new Set(playlist)
+    return [...playlistSet.add(track)]
 }
 
 /**
@@ -44,7 +46,9 @@ export function addTrack(playlist, track) {
  * @returns {string[]} new playlist
  */
 export function deleteTrack(playlist, track) {
-  throw new Error('Please implement the deleteTrack function');
+    const playlistSet = new Set(playlist)
+    playlistSet.delete(track)
+    return [...playlistSet]
 }
 
 /**
@@ -54,5 +58,18 @@ export function deleteTrack(playlist, track) {
  * @returns {string[]} list of artists
  */
 export function listArtists(playlist) {
-  throw new Error('Please implement the listArtists function');
+    /**
+     * Function to extract the artist name from a track description
+     * string in the form of "<SONG> - <ARTIST>"
+     * @type {function(string): string}
+     */
+    const getArtist = (trackName => trackName.split(" - ").at(-1))
+
+    /**
+     * A list of all the artists within a playlist.
+     * May contain duplicates.
+     * @type {string[]}
+     */
+    const artistList = playlist.map(getArtist)
+    return [...new Set(artistList)]
 }
