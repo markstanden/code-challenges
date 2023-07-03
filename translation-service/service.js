@@ -8,7 +8,7 @@
 //
 // In your own projects, files, and code, you can play with @ts-check as well.
 
-import {NotAvailable} from "./errors";
+import {NotAvailable, Untranslatable} from "./errors";
 
 export class TranslationService {
     /**
@@ -53,7 +53,7 @@ export class TranslationService {
                 this.free(text)
                     .then(translated => translated)
                     .catch(error => {
-                        throw new NotAvailable(text)
+                        throw new NotAvailable(error)
                     })
             )
         )
@@ -78,7 +78,41 @@ export class TranslationService {
      * @returns {Promise<void>}
      */
     request(text) {
-        throw new Error('Implement the request function');
+        let count = 1
+
+        const makeRequest = (text) => {
+            return new Promise((resolve, reject) => {
+                this.api.request(text, (error) => {
+                    if (error === undefined) {
+                        resolve()
+                    } else {
+                        reject(new Untranslatable())
+                    }
+                })
+            }).catch(error => {
+                if (count < 3) {
+                    count++
+                    return makeRequest(text)
+                } else throw error
+            })
+        }
+        return makeRequest(text)
+    }
+
+    /**
+     * Higher order function that returns a function that resolves a high quality translation or
+     * rejects a translation below the required threshold.
+     * @param {number} minimumQuality
+     * @param {function(string):void} resolve
+     * @param {function(string?):void} reject
+     * @returns {(function(Translation): void)|*}
+     */
+    qualityCheck = (minimumQuality, resolve, reject) => (response) => {
+        if (response.quality >= minimumQuality) {
+            resolve(response.translation)
+        } else {
+            reject(new QualityThresholdNotMet(`Got ${response.quality}%, needed ${minimumQuality}%`))
+        }
     }
 
     /**
@@ -92,7 +126,18 @@ export class TranslationService {
      * @returns {Promise<string>}
      */
     premium(text, minimumQuality) {
-        throw new Error('Implement the premium function');
+        return new Promise((resolve, reject) => {
+                this.api.fetch(text)
+                    .then(this.qualityCheck(minimumQuality, resolve, reject))
+                    .catch(() => {
+                        // Hammer their systems until the translation is done
+                        this.request(text)
+                            .then(() => this.api.fetch(text)
+                                .then(this.qualityCheck(minimumQuality, resolve, reject))
+                            ).catch(error => reject(error))
+                    })
+            }
+        )
     }
 }
 
@@ -100,7 +145,8 @@ export class TranslationService {
  * This error is used to indicate a translation was found, but its quality does
  * not meet a certain threshold. Do not change the name of this error.
  */
-export class QualityThresholdNotMet extends Error {
+export class QualityThresholdNotMet
+    extends Error {
     /**
      * @param {string} text
      */
