@@ -8,7 +8,7 @@
 //
 // In your own projects, files, and code, you can play with @ts-check as well.
 
-import {NotAvailable, Untranslatable} from "./errors";
+import {Untranslatable} from "./errors";
 
 export class TranslationService {
     /**
@@ -48,15 +48,16 @@ export class TranslationService {
      * @returns {Promise<string[]>}
      */
     batch(texts) {
-        const getAllTranslations = (toTranslate) => Promise.all(
-            toTranslate.map(text =>
-                this.free(text)
-                    .then(translated => translated)
-                    .catch(error => {
-                        throw new NotAvailable(error)
-                    })
+        /**
+         * Provide a list of strings to translate,
+         * getAllTranslations translates all using the free service.
+         * @param {String[]} toTranslate
+         * @returns {Promise<Awaited<string>[]>}
+         */
+        const getAllTranslations = (toTranslate) =>
+            Promise.all(toTranslate.map(text => this.free(text))
             )
-        )
+
         return new Promise((resolve, reject) => {
             if (texts.length === 0) {
                 reject(new BatchIsEmpty())
@@ -78,11 +79,12 @@ export class TranslationService {
      * @returns {Promise<void>}
      */
     request(text) {
+        const MAX_ATTEMPTS_AGAINST_API = 3
         let count = 1
 
-        const makeRequest = (text) => {
+        const makeRequest = (toTranslate) => {
             return new Promise((resolve, reject) => {
-                this.api.request(text, (error) => {
+                this.api.request(toTranslate, error => {
                     if (error === undefined) {
                         resolve()
                     } else {
@@ -90,10 +92,11 @@ export class TranslationService {
                     }
                 })
             }).catch(error => {
-                if (count < 3) {
-                    count++
-                    return makeRequest(text)
-                } else throw error
+                if (count++ < MAX_ATTEMPTS_AGAINST_API) {
+                    return makeRequest(toTranslate)
+                } else {
+                    throw error
+                }
             })
         }
         return makeRequest(text)
@@ -104,7 +107,7 @@ export class TranslationService {
      * rejects a translation below the required threshold.
      * @param {number} minimumQuality
      * @param {function(string):void} resolve
-     * @param {function(string?):void} reject
+     * @param {function(any?):void} reject
      * @returns {(function(Translation): void)|*}
      */
     qualityCheck = (minimumQuality, resolve, reject) => (response) => {
@@ -130,6 +133,7 @@ export class TranslationService {
                 this.api.fetch(text)
                     .then(this.qualityCheck(minimumQuality, resolve, reject))
                     .catch(() => {
+                        // Presumably unavailable
                         // Hammer their systems until the translation is done
                         this.request(text)
                             .then(() => this.api.fetch(text)
