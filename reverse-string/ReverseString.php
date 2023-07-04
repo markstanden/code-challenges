@@ -24,7 +24,17 @@
 
 declare(strict_types=1);
 
+function reverseString_Easy(string $text): string
+{
+    return strrev($text);
+}
+
 function reverseString(string $text): string
 {
-    throw new BadFunctionCallException("Please implement the reverseString method!");
+    $last_index = strlen($text) - 1;
+    $result = "";
+    for ($i = $last_index; $i >= 0; $i--) {
+        $result .= $text[$i];
+    }
+    return $result;
 }
