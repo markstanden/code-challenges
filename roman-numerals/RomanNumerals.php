@@ -24,7 +24,69 @@
 
 declare(strict_types=1);
 
+const NUMERALS_TENS = [
+    1000 => "M",
+    100 => "C",
+    10 => "X",
+    1 => "I",
+];
+const NUMERALS_FIVES = [
+    "C" => "D",
+    "X" => "L",
+    "I" => "V",
+];
 function toRoman(int $number): string
 {
-    throw new \BadFunctionCallException("Implement the toRoman function");
+    $numerals = "";
+    $values_as_powers_of_ten = convertToPowersOf10($number);
+    foreach ($values_as_powers_of_ten as $ten => $quantity) {
+        $this_numeral = NUMERALS_TENS[$ten];
+
+        if ($quantity) {
+            if ($quantity <= 3) {
+                // We don't need a half-numeral yet, so multiply by the quantity.
+                $numerals .= str_repeat($this_numeral, $quantity);
+                
+            } elseif ($quantity <= 8) {
+                // Get the next half-numeral
+                $five_numerals = NUMERALS_FIVES[$this_numeral];
+
+                // Calculate the number of numerals before (-ve) or after (+ve) the 5x numeral
+                $numerals_before_after = $quantity - 5;
+
+                // Create the amount of the current numeral to prefix/suffix
+                $the_numerals = str_repeat($this_numeral, abs($numerals_before_after));
+                $numerals .= $numerals_before_after > 0
+                    ? $five_numerals . $the_numerals    // suffix the numerals on the half-numeral
+                    : $the_numerals . $five_numerals;   // prefix the numerals on the half-numeral
+
+            } else {
+                // get the next big numeral
+                $ten_numerals = NUMERALS_TENS[$ten * 10];
+                
+                // prefix it with one of the current numeral.
+                $numerals .= $this_numeral . $ten_numerals;
+            }
+        }
+    }
+    return $numerals;
+}
+
+/**
+ * return the value as an associative array of
+ * powers of ten and the quantities within value.
+ * @param int $number
+ * @return array
+ */
+function convertToPowersOf10(int $number): array
+{
+    $as_numerals = [];
+    $remainder = $number;
+    foreach (NUMERALS_TENS as $decimal => $roman) {
+        while ($remainder >= $decimal) {
+            $remainder -= $decimal;
+            array_key_exists($decimal, $as_numerals) ? $as_numerals[$decimal]++ : $as_numerals[$decimal] = 1;
+        }
+    }
+    return $as_numerals;
 }
