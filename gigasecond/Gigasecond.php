@@ -23,8 +23,13 @@
  */
 
 declare(strict_types=1);
+const GIGA = 1E9;
+const PERIOD = "P";
+const TIME = "T";
+const SECONDS = "S";
 
 function from(DateTimeImmutable $date): DateTimeImmutable
 {
-    throw new \BadFunctionCallException("Implement the from function");
+    $interval_string = PERIOD . TIME . GIGA . SECONDS;  // "PT1000000000S"
+    return $date->add(new DateInterval($interval_string));
 }
