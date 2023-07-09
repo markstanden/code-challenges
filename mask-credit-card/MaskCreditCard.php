@@ -26,5 +26,15 @@ declare(strict_types=1);
 
 function maskify(string $cc): string
 {
-    throw new \BadFunctionCallException("Implement the maskify function");
+    if (strlen($cc) < 6) {
+        return $cc;
+    }
+    /**
+     * Regex pattern with multiple capture groups for each of the groups of
+     * digits to be used or obscured.  Also captures the hyphens, if present.
+     * @var $strict_pattern
+     */
+    $strict_pattern = '/(^\d)(\d{3})(-?)(\d{4})(-?)(\d{4})$/';
+    $replacement = '$1###$3####$5$6';
+    return preg_replace($strict_pattern, $replacement, $cc);
 }
