@@ -1,6 +1,6 @@
 const {lengthOfLIS: sut} = require('./longest_increasing_subsequence');
 describe('Site provided tests', ()=>{
-    test('test 1', ()=>{
+    test('no duplicates', ()=>{
         const given = [10,9,2,5,3,7,101,18];
         const expected = 4;
 
@@ -9,7 +9,7 @@ describe('Site provided tests', ()=>{
         expect(result).toEqual(expected)
     })
 
-    test('test 2', ()=>{
+    test('with duplicate values', ()=>{
         const given = [0,1,0,3,2,3];
         const expected = 4;
 
