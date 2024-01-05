@@ -1,0 +1,15 @@
+{
+  "name": "leetcode",
+  "version": "1.0.0",
+  "description": "My solutions to the leetcode problems i'm working on",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Mark Standen",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^29.7.0"
+  }
+}
