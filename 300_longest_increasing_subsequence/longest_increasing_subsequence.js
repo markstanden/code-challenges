@@ -3,13 +3,18 @@
  * @return {number}
  */
 function lengthOfLIS(nums) {
-    nums.map((value, index, array) => {
-        //10
-        const rest = array.slice(index)
-    })
-    // start chain
-    // if higher add to chain
-    // if less or equal start new chain
+    [10,9,2,5,3,7,101,18]
+
+    //first scan - find nearest neighbour
+    // 10 -> 101
+    // 9 -> 101
+    // 2 -> 5
+    // 5 -> 7
+    // 3 -> 7
+    // 7 -> 101
+    // 101 -> undefined
+
+    // count jumps
 };
 
 
