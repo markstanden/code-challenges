@@ -1,6 +1,6 @@
 # Code Challenges
 
-## Collected solutions to coding problems in various programming languages.
+## My solutions to coding problems in various programming languages.
 
 - Python
 - Go
