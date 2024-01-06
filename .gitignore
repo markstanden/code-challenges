@@ -1,3 +1,14 @@
-.idea
-.DS_Store
-/node_modules/
+**/.idea*
+**/.DS_Store
+
+**/*gradle*
+**/node_modules
+
+**/.exercism
+**/HELP.md
+**/HINTS.md
+**/TUTORIAL.md
+
+**/target
+**/lib
+**/build
