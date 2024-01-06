@@ -4,6 +4,7 @@
 **/*gradle*
 **/node_modules
 **/obj%
+**/__pycache__
 
 **/.exercism
 **/HELP.md
