@@ -14,6 +14,7 @@ describe('supplied test cases', () => {
                     [3, 4, 100],
                 ],
             ],
+            // Line 2, 3 & 4 = 100 + 100 = 200;
             expected: 200,
         },
         {
@@ -25,6 +26,7 @@ describe('supplied test cases', () => {
                     [6, 9, 1],
                 ],
             ],
+            // Lines 4 & 5 = 3 + 7 = 10;
             expected: 10,
         },
         {
@@ -37,7 +39,9 @@ describe('supplied test cases', () => {
                     [5, 9, 15],
                 ],
             ],
-            expected: 10,
+
+            // Line 5 = 8 + 7 + 1 + 15 = 31;
+            expected: 31,
         },
     );
 });
@@ -61,7 +65,7 @@ describe('personal test cases', () => {
                     [1, 1, 1],
                 ]
             ],
-            expected: 0,
+            expected: 2,
         },
         {
             name: 'single cell outside range',
