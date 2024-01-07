@@ -7,21 +7,43 @@
  * @return {number} the minimum number of steps
  */
 function jumpingOnTheClouds(clouds) {
+    /*
+    The number of hops for Even lengths of 0s
+    round up to the number of hops of the next odd number.
+    0 = 1
+    00 = 2
+    000 = 2
+    0000 = 3
+    00000 = 3
+    */
+
     return clouds
+        .slice(1)
         .join("")
         .split('1')
         .map(item => item.length)
-        .map(roundEvensUp)
+        .map(halfThenAddOne)
         .reduce(sum);
 
-    function roundEvensUp(num) {
-        return num % 2 === 0 ? num + 1 : num;
+    /**
+     * Returns the number of required jumps for a given truthy length of 0s
+     * Filters falsy num values, returning 0
+     * @param num the length of the sequence of 'landable' clouds
+     * @return {number} the minimum number of hops required
+     */
+    function halfThenAddOne(num) {
+        return num && Math.trunc(num / 2) + 1;
     }
 
+    /**
+     * Reducer that returns the sum of an array of values
+     * @param {number} acc - Accumulator
+     * @param {number} current - Current value
+     * @return {number} - the sum of the passed arguments
+     */
     function sum(acc, current){
         return acc + current;
     }
-
 }
 
 module.exports = {jumpingOnTheClouds};
