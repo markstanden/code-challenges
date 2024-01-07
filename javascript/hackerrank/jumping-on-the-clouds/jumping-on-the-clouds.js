@@ -18,12 +18,11 @@ function jumpingOnTheClouds(clouds) {
     */
 
     return clouds
-        .slice(1)
         .join("")
         .split('1')
         .map(item => item.length)
         .map(halfThenAddOne)
-        .reduce(sum);
+        .reduce(sum, -1); // Init accumulator at -1 as last hop is not counted
 
     /**
      * Returns the number of required jumps for a given truthy length of 0s
@@ -32,7 +31,7 @@ function jumpingOnTheClouds(clouds) {
      * @return {number} the minimum number of hops required
      */
     function halfThenAddOne(num) {
-        return num && Math.trunc(num / 2) + 1;
+        return Math.trunc(num / 2) + 1;
     }
 
     /**
