@@ -7,7 +7,21 @@
  * @return {number} the minimum number of steps
  */
 function jumpingOnTheClouds(clouds) {
-    return 0
+    return clouds
+        .join("")
+        .split('1')
+        .map(item => item.length)
+        .map(roundEvensUp)
+        .reduce(sum);
+
+    function roundEvensUp(num) {
+        return num % 2 === 0 ? num + 1 : num;
+    }
+
+    function sum(acc, current){
+        return acc + current;
+    }
+
 }
 
 module.exports = {jumpingOnTheClouds};
