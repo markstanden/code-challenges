@@ -71,7 +71,16 @@ describe('personal test cases', () => {
             name: 'single cell outside range',
             given: [1,
                 [
-                    [2, 2, 1],
+                    [5, 10, 1],
+                ]
+            ],
+            expected: 0,
+        },
+        {
+            name: 'double cell outside range',
+            given: [2,
+                [
+                    [0, 0, 2],
                 ]
             ],
             expected: 0,
