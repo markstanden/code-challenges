@@ -6,7 +6,7 @@
  * @param {number[]} clouds binary number array, where 0 represents safe clouds
  * @return {number} the minimum number of steps
  */
-function jumpingOnTheClouds(clouds) {
+function jumpingOnClouds(clouds) {
     /*
     The number of hops for Even lengths of 0s
     round up to the number of hops of the next odd number.
@@ -45,4 +45,4 @@ function jumpingOnTheClouds(clouds) {
     }
 }
 
-module.exports = {jumpingOnTheClouds};
+module.exports = {jumpingOnClouds};

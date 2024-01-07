@@ -1,7 +1,7 @@
 const {testEachWith} = require('../../__test-helpers/testEachWith')
-const {jumpingOnTheClouds} = require('./jumping-on-the-clouds');
+const {jumpingOnClouds} = require('./jumping-on-clouds');
 
-const testEachWith_ = testEachWith(jumpingOnTheClouds);
+const testEachWith_ = testEachWith(jumpingOnClouds);
 
 describe('supplied test cases', () => {
     testEachWith_(
