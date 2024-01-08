@@ -1,7 +1,7 @@
 /*
  * This solution is O(n^2) due to the nested iterator functions in the
  * array rotator function.  It passes all tests locally, and reads ok,
- * but fails to beat the extreme (arrayLength = 10,000,000, queries.length = 100000)
+ * but fails to beat the extreme (e.g. arrayLength = 10,000,000, queries.length = 100000)
  * tests on the site.
  *
  * I will remove the iterator methods for a for loop and test again to see if there are
