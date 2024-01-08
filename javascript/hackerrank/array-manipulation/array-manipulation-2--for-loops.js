@@ -1,3 +1,8 @@
+/*
+ * This solution is still O(n^2) and still fails to beat the extreme tests on the site.
+ * Apparently this solution works in other languages, and it times out in JS
+ */
+
 /**
  * @typedef {number} leftIndex - left index (inclusive)
  * @typedef {number} rightIndex - right index (inclusive)
@@ -29,6 +34,7 @@ function arrayManipulation(lineWidth, queries) {
     }
     return result.reduce(max)
 
+
     /**
      * Converts a query into an array of values
      * *startIndex* and *endIndex* are 1-index array inclusive values.
@@ -41,7 +47,7 @@ function arrayManipulation(lineWidth, queries) {
         return Array(lineWidth).fill(value, startIndex - 1, endIndex)
     }
 
-    
+
     /**
      * Reducer that returns the highest value in a numeric array
      * @param {number} prev
