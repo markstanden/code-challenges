@@ -1,5 +1,5 @@
 const {testEachWith} = require('../../__test-helpers/testEachWith');
-const {arrayManipulation} = require('./array-manipulation');
+const {arrayManipulation} = require('./array-manipulation-3--map-ds');
 
 const testEachWith_ = testEachWith(arrayManipulation);
 
