@@ -31,7 +31,49 @@
  * @param {query[]} queries - The queries to perform on the array.
  **/
 function arrayManipulation(lineWidth, queries) {
+    return getHighestTo(lineWidth)(toMap(convertQueries(queries)));
 
+    function convertQueries(queries) {
+        return queries.flatMap(
+            ([startIndex, endIndex, value]) => [[startIndex, value], [endIndex + 1, value * -1]],
+        );
+    }
+
+    function toMap(queries) {
+        return queries.reduce((qmap, [index, value]) => qmap.has(index)
+                ? qmap.set(index, qmap.get(index) + value)
+                : qmap.set(index, value),
+            new Map());
+    }
+
+
+    /**
+     * Returns a function that attempts all numeric keys
+     * in an array, limited to the provided *max* value
+     * @param {number} max - The final key to attempt to access in the map
+     * @return {function(Map<number, number>): number}
+     */
+    function getHighestTo(max) {
+        return getHighest;
+
+        /**
+         * Returns the highest value by
+         * attempting all numeric keys in a map
+         * @param {Map<number,number>}map
+         * @return {number} The highest value in the range
+         */
+        function getHighest(map) {
+            let highest = 0;
+            let prev = 0;
+            let index = 0;
+
+            while (index++ <= max) {
+                prev += map.get(index) ?? 0;
+                highest = Math.max(highest, prev);
+            }
+            return highest;
+        }
+    }
 }
 
-module.exports = {arrayManipulation}
+module.exports = {arrayManipulation};
