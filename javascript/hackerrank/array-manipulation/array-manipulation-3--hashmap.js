@@ -38,7 +38,11 @@
  * @param {Query[]} queries - The queries to perform on the array.
  **/
 function arrayManipulation(lineWidth, queries) {
-    return getHighestTo(lineWidth)(toMap(convertQueries(queries)));
+    return fp.pipe(
+        convertQueries,
+        toMap,
+        getHighestTo(lineWidth),
+    )(queries);
 
     /**
      * @typedef {number} index - final array index
@@ -101,5 +105,18 @@ function arrayManipulation(lineWidth, queries) {
         }
     }
 }
+
+/**
+ * IIFE to encapsulate fp toolkit
+ * @see https://github.com/markstanden/fp
+ */
+const fp = (function fpToolkitIIFE() {
+    const composePair = (f, g) => (args) => f(g(args));
+    const compose = (...fns) => fns.reduce(composePair);
+    const pipe = (...fns) => fns.reduceRight(composePair);
+
+    return {compose, pipe}
+}())
+
 
 module.exports = {arrayManipulation};
