@@ -5,18 +5,25 @@
  * Reading the comments in the challenge a member has suggested the following approach,
  * which I think will reduce complexity:
  *
- * - Create a Map - key will be index within the final array
- * - Add queries to the map, positive entries for start values and negative for the end values
- * - Map to array
- * - Run through sequentially adding all values, and recording the highest
- * - Return highest
+ * 1. Create a Map - key will be index within the final array
+ * 2. Add queries to the map, positive entries for start values and negative for the end values
+ * 3. Map to array
+ * 4. Run through sequentially adding all values, and recording the highest
+ * 5. Return highest
+ *
+ * I opted to 'brute force' the keys in steps 3 & 4 which
+ * means that I don't need to create the array in 3.
+ * Some have suggested this is why the JS version was failing,
+ * with maximum array lengths being exceeded, mdn lists max size of an array
+ * at > 3,200,000,000 entries, so it shouldn't be.
+ * Either way, it also means I don't need to run an expensive sort algorithm on the keys.
  */
 
 /**
  * @typedef {number} leftIndex - left index (inclusive)
  * @typedef {number} rightIndex - right index (inclusive)
  * @typedef {number} valueToAdd - Value to add
- * @typedef {[leftIndex, rightIndex, value]} query
+ * @typedef {[leftIndex, rightIndex, valueToAdd]} Query
  */
 
 /**
@@ -28,17 +35,35 @@
  * [start index, end index, value to add]
  *
  * @param {number} lineWidth the number of elements in the array
- * @param {query[]} queries - The queries to perform on the array.
+ * @param {Query[]} queries - The queries to perform on the array.
  **/
 function arrayManipulation(lineWidth, queries) {
     return getHighestTo(lineWidth)(toMap(convertQueries(queries)));
 
+    /**
+     * @typedef {number} index - final array index
+     * @typedef {number} valueManipulation - alteration to the value.
+     * @typedef {[index, valueManipulation]} QueryTuple
+     */
+    /**
+     * Returns a new array after converting the provided query array into
+     * an array of single alteration steps.
+     * @param {Query[]} queries - The provided array of queries
+     * @return {QueryTuple}
+     */
     function convertQueries(queries) {
         return queries.flatMap(
-            ([startIndex, endIndex, value]) => [[startIndex, value], [endIndex + 1, value * -1]],
+            ([startIndex, endIndex, value]) =>
+                [[startIndex, value], [endIndex + 1, value * -1]],
         );
     }
 
+    /**
+     * Returns a Map of queries.
+     * Multiple queries with the same index are added together.
+     * @param {QueryTuple[]} queries
+     * @return {Map<number, number>}
+     */
     function toMap(queries) {
         return queries.reduce((qmap, [index, value]) => qmap.has(index)
                 ? qmap.set(index, qmap.get(index) + value)
@@ -71,6 +96,7 @@ function arrayManipulation(lineWidth, queries) {
                 prev += map.get(index) ?? 0;
                 highest = Math.max(highest, prev);
             }
+
             return highest;
         }
     }
