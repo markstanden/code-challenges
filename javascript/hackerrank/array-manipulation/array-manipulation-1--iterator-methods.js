@@ -12,7 +12,7 @@
  * @typedef {number} leftIndex - left index (inclusive)
  * @typedef {number} rightIndex - right index (inclusive)
  * @typedef {number} valueToAdd - Value to add
- * @typedef {[leftIndex, rightIndex, value]} query
+ * @typedef {[leftIndex, rightIndex, valueToAdd]} Query
  */
 
 /**
@@ -24,9 +24,9 @@
  * [start index, end index, value to add]
  *
  * @param {number} lineWidth the number of elements in the array
- * @param {query[]} queries - The queries to perform on the array.
+ * @param {Query[]} queries - The queries to perform on the array.
  **/
-function arrayManipulation1IteratorMethods(lineWidth, queries) {
+function arrayManipulation(lineWidth, queries) {
     const arrayRotator = rotate90(0, lineWidth);
 
     return arrayRotator(queries.map(convertQuery))
@@ -94,4 +94,4 @@ function arrayManipulation1IteratorMethods(lineWidth, queries) {
     }
 }
 
-module.exports = {arrayManipulation: arrayManipulation1IteratorMethods}
+module.exports = {arrayManipulation}
