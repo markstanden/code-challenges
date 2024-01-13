@@ -186,6 +186,6 @@ describe('immutability tests', () => {
         sut(givenTarget, givenAddition);
 
         expect(givenTarget).toEqual(expected);
-        expect(givenTarget[testing]).toEqual(undefined);
+        expect(givenTarget.testing).toEqual(undefined);
     })
 })
