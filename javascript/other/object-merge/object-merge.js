@@ -17,8 +17,24 @@
  * @return {object}
  */
 function objectMerge(target, addition) {
-    // Returns a mutated object and blasts away data within sub-branches
-    return Object.assign(target,addition);
+    const result = {
+        ...target,
+    };
+    const branch = (res, add) =>
+        Object.keys(res)
+            .map((key) => {
+                if (add.hasOwnProperty(key)) {
+                    if (add[key] === typeof Object) {
+                        branch(res[key], add[key]);
+                    } else {
+                        return { [key] : add[key] };
+                    }
+                } else {
+                    return { key: res[key] };
+                }
+            });
+
+    return branch(result, addition)[0];
 }
 
-module.exports = {objectMerge}
+module.exports = {objectMerge};
