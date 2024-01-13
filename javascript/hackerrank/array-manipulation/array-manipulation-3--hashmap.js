@@ -39,9 +39,9 @@
  **/
 function arrayManipulation(lineWidth, queries) {
     return fp.pipe(
-        convertQueries,
-        toMap,
-        getHighestTo(lineWidth),
+        convertToQueryPairs,
+        squashToIndexedMap,
+        getHighestValueToIndex(lineWidth),
     )(queries);
 
     /**
@@ -55,7 +55,7 @@ function arrayManipulation(lineWidth, queries) {
      * @param {Query[]} queries - The provided array of queries
      * @return {QueryTuple}
      */
-    function convertQueries(queries) {
+    function convertToQueryPairs(queries) {
         return queries.flatMap(
             ([startIndex, endIndex, value]) =>
                 [[startIndex, value], [endIndex + 1, value * -1]],
@@ -68,7 +68,7 @@ function arrayManipulation(lineWidth, queries) {
      * @param {QueryTuple[]} queries
      * @return {Map<number, number>}
      */
-    function toMap(queries) {
+    function squashToIndexedMap(queries) {
         return queries.reduce((qmap, [index, value]) => qmap.has(index)
                 ? qmap.set(index, qmap.get(index) + value)
                 : qmap.set(index, value),
@@ -82,7 +82,7 @@ function arrayManipulation(lineWidth, queries) {
      * @param {number} max - The final key to attempt to access in the map
      * @return {function(Map<number, number>): number}
      */
-    function getHighestTo(max) {
+    function getHighestValueToIndex(max) {
         return getHighest;
 
         /**
