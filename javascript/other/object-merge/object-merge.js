@@ -33,16 +33,10 @@ function objectMerge(target, toMerge) {
                 // iterate the keys of the merge branch
                 if (existingBranch.hasOwnProperty(key)) {
                     // existing branch already has this key
-
                     if (typeof existingBranch[key] === 'object') {
                         // and it is an Object, so may have internal branches
                         res = objectMerge(existingBranch[key], mergeBranch[key]);
-
-                    } else {
-                        // not an object, so update the value
-                        res = mergeBranch[key];
                     }
-
                 }
                 // res does not have the key yet
                 return {[key]: res};
