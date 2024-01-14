@@ -17,34 +17,28 @@
  * @return {object}
  */
 function objectMerge(target, toMerge) {
-    // prevent easy error conditions
-    const existingBranch = target ?? {};
-    const mergeBranch = toMerge ?? {};
+    return merge(target ?? {}, toMerge ?? {})
 
-    // create a shallow clone of the branch
-    return {
-        ...existingBranch,
+    /**
+     * Merges an object into another object
+     * @param existingBranch
+     * @param mergeBranch
+     * @return {object}
+     */
+    function merge(existingBranch, mergeBranch) {
+        return {
+            ...existingBranch,
+            ...Object.keys(mergeBranch)
+                .map(key =>
+                        (existingBranch.hasOwnProperty(key) && typeof existingBranch[key] === 'object')
+                            ? {[key]: objectMerge(existingBranch[key], mergeBranch[key])}
+                            : {[key]: mergeBranch[key]}
 
-        // create updated object branches as required,
-        // and spread into (overwriting) existing top level object branches
-        ...Object.keys(mergeBranch)
-            .map((key) => {
-                // iterate the keys of the merge branch
+                ).reduce((obj, branch) => ({...obj, ...branch}), {})
+        };
+    }
 
-                if (existingBranch.hasOwnProperty(key) && typeof existingBranch[key] === 'object') {
-                    // existing branch already has this key
-                    // and it is an Object, so may have internal branches
-                    return {[key]: objectMerge(existingBranch[key], mergeBranch[key])};
-                }
 
-                // else
-                // res either does not have the key yet,
-                // or it is a value, so we should assign it
-                return {[key]: mergeBranch[key]};
-
-                // reduce the array of edited branches into a single object
-            }).reduce((obj, branch) => Object.assign(obj, branch), {})
-    };
 }
 
 module.exports = {objectMerge};
