@@ -8,92 +8,143 @@ describe('alters field information', () => {
         {
             name: 'updated first level field',
             given: [
-                {"test": "test"},
-                {"test": "test2"},
+                {'test': 'test'},
+                {'test': 'test2'},
             ],
-            expected: {"test": "test2"},
+            expected: {'test': 'test2'},
         },
         {
             name: 'updated second level field',
             given: [
-                {"test": {"name": "test"}},
-                {"test": {"name": "test2"}},
+                {'test': {'name': 'test'}},
+                {'test': {'name': 'test2'}},
             ],
-            expected: {"test": {"name": "test2"}},
+            expected: {'test': {'name': 'test2'}},
         },
         {
             name: 'updated third level field',
             given: [
-                {"describe": {"test": {"name": "test"}}},
-                {"describe": {"test": {"name": "test2"}}},
+                {'describe': {'test': {'name': 'test'}}},
+                {'describe': {'test': {'name': 'test2'}}},
             ],
-            expected: {"describe": {"test": {"name": "test2"}}},
+            expected: {'describe': {'test': {'name': 'test2'}}},
         },
         {
             name: 'updated multi level field',
             given: [
-                {"company":{"repo":{"package":{"module":{"function":{"describe":{"test":{"name":"test"}}}}}}}},
-                {"company":{"repo":{"package":{"module":{"function":{"describe":{"test":{"name":"test2"}}}}}}}},
+                {'company': {'repo': {'package': {'module': {'function': {'describe': {'test': {'name': 'test'}}}}}}}},
+                {'company': {'repo': {'package': {'module': {'function': {'describe': {'test': {'name': 'test2'}}}}}}}},
             ],
-            expected: {"company":{"repo":{"package":{"module":{"function":{"describe":{"test":{"name":"test2"}}}}}}}},
+            expected: {'company': {'repo': {'package': {'module': {'function': {'describe': {'test': {'name': 'test2'}}}}}}}},
         },
     );
 });
 
+describe('copies multiple fields on each branch', () => {
+    testEachWith_(
+        {
+            name: 'deep first level fields',
+            given: [
+                {
+                    'initial1': 'test1',
+                    'initial2': 'test2',
+                    'initial3': 'test3'
+                },
+                {
+                    'option1': 'value1',
+                    'option2':'value2',
+                    'option3':"value3"
+                },
+            ],
+            expected: {
+                'initial1': 'test1',
+                'initial2': 'test2',
+                'initial3': 'test3',
+                'option1': 'value1',
+                'option2':'value2',
+                'option3':"value3"
+            },
+        },
+    );
+});
 describe('does not destroy existing information on branches', () => {
     testEachWith_(
         {
             name: 'updated first level field',
             given: [
-                {"test": "test", "other": "test"},
-                {"test": "test2"},
+                {'test': 'test', 'other': 'test'},
+                {'test': 'test2'},
             ],
-            expected: {"test": "test2", "other": "test"},
+            expected: {'test': 'test2', 'other': 'test'},
         },
         {
             name: 'updated second level field',
             given: [
-                {"test": {"name": "test"}, "other": "test"},
-                {"test": {"name": "test2"}},
+                {'test': {'name': 'test'}, 'other': 'test'},
+                {'test': {'name': 'test2'}},
             ],
-            expected: {"test": {"name": "test2"}, "other": "test"},
+            expected: {'test': {'name': 'test2'}, 'other': 'test'},
         },
         {
             name: 'updated third level field',
             given: [
-                {"describe": {"test": {"name": "test"}, "other": "test"}, "other": "test"},
-                {"describe": {"test": {"name": "test2"}}},
+                {'describe': {'test': {'name': 'test'}, 'other': 'test'}, 'other': 'test'},
+                {'describe': {'test': {'name': 'test2'}}},
             ],
-            expected: {"describe": {"test": {"name": "test2"}, "other": "test"}, "other": "test"},
+            expected: {'describe': {'test': {'name': 'test2'}, 'other': 'test'}, 'other': 'test'},
         },
         {
             name: 'updated multi level field',
             given: [
-                {"company":{"repo":{"package":{"module":{
-                    "function":{"describe":{"test":{"name":"test"}}}
-                }}}}},
-                {"company":{"repo":{"package":{"module":{
-                    "author":"Testy McTestFace",
-                    "hobbies":["Testing"],
-                    "other":{
-                        "company":{
-                            "name":"Name",
-                            "address":"Address",
-                        }
-                    }
-                }}}}},
+                {
+                    'company': {
+                        'repo': {
+                            'package': {
+                                'module': {
+                                    'function': {'describe': {'test': {'name': 'test'}}},
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    'company': {
+                        'repo': {
+                            'package': {
+                                'module': {
+                                    'author': 'Testy McTestFace',
+                                    'hobbies': ['Testing'],
+                                    'other': {
+                                        'company': {
+                                            'name': 'Name',
+                                            'address': 'Address',
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
             ],
-            expected: {"company":{"repo":{"package":{"module":{
-                "function":{"describe":{"test":{"name":"test2"}}},
-                "author":"Testy McTestFace",
-                "hobbies":["Testing"],
-                "other":{
-                    "company":{
-                        "name":"Name",
-                        "address":"Address",
-                    }
-                }
-            }}}}},
+            expected: {
+                'company': {
+                    'repo': {
+                        'package': {
+                            'module': {
+                                'function': {'describe': {'test': {'name': 'test'}}},
+                                'author': 'Testy McTestFace',
+                                'hobbies': ['Testing'],
+                                'other': {
+                                    'company': {
+                                        'name': 'Name',
+                                        'address': 'Address',
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+            },
         },
     );
 });
@@ -104,17 +155,17 @@ describe('potential error test cases', () => {
             name: 'empty target',
             given: [
                 {},
-                {test:"test"},
+                {test: 'test'},
             ],
-            expected: {test:"test"},
+            expected: {test: 'test'},
         },
         {
             name: 'empty addition',
             given: [
-                {test:"test"},
+                {test: 'test'},
                 {},
             ],
-            expected: {test:"test"},
+            expected: {test: 'test'},
         },
         {
             name: 'empty target and addition',
@@ -128,17 +179,17 @@ describe('potential error test cases', () => {
             name: 'null target',
             given: [
                 null,
-                {test:"test"},
+                {test: 'test'},
             ],
-            expected: {test:"test"},
+            expected: {test: 'test'},
         },
         {
             name: 'null addition',
             given: [
-                {test:"test"},
+                {test: 'test'},
                 null,
             ],
-            expected: {test:"test"},
+            expected: {test: 'test'},
         },
         {
             name: 'null target and addition',
@@ -152,40 +203,40 @@ describe('potential error test cases', () => {
             name: 'empty target',
             given: [
                 {},
-                {test:"test"},
+                {test: 'test'},
             ],
-            expected: {test:"test"},
+            expected: {test: 'test'},
         },
         {
             name: 'empty addition',
             given: [
-                {test:"test"},
+                {test: 'test'},
                 {},
             ],
-            expected: {test:"test"},
+            expected: {test: 'test'},
         },
     );
 });
 
 describe('immutability tests', () => {
-    test('target is not mutated', ()=>{
-        const sut = objectMerge
+    test('target is not mutated', () => {
+        const sut = objectMerge;
 
         const givenTarget = {
-            test: "test"
+            test: 'test',
         };
 
         const givenAddition = {
-            testing: "testing"
+            testing: 'testing',
         };
 
         const expected = {
-            test: "test"
+            test: 'test',
         };
 
         sut(givenTarget, givenAddition);
 
         expect(givenTarget).toEqual(expected);
         expect(givenTarget.testing).toEqual(undefined);
-    })
-})
+    });
+});

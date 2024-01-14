@@ -17,30 +17,39 @@
  * @return {object}
  */
 function objectMerge(target, toMerge) {
+    // prevent easy error conditions
+    const existingBranch = target ?? {};
+    const mergeBranch = toMerge ?? {};
+
     // create a shallow clone of the branch
     return {
-        ...target,
-        ...Object.keys(toMerge)
+        ...existingBranch,
+
+        // create updated object branches as required,
+        // and spread into (overwriting) existing top level object branches
+        ...Object.keys(mergeBranch)
             .map((key) => {
-                let res = toMerge[key];
+                let res = mergeBranch[key];
                 // iterate the keys of the merge branch
-                if (target.hasOwnProperty(key)) {
+                if (existingBranch.hasOwnProperty(key)) {
                     // existing branch already has this key
 
-                    if (typeof target[key] === 'object') {
+                    if (typeof existingBranch[key] === 'object') {
                         // and it is an Object, so may have internal branches
-                        res = objectMerge(target[key], toMerge[key]);
+                        res = objectMerge(existingBranch[key], mergeBranch[key]);
 
                     } else {
                         // not an object, so update the value
-                        res = toMerge[key];
+                        res = mergeBranch[key];
                     }
 
                 }
-                    // res does not have the key yet
-                    return {[key]: res};
-            }).at(0)
-    }
+                // res does not have the key yet
+                return {[key]: res};
+
+                // reduce the array of edited branches into a single object
+            }).reduce((obj, branch) => Object.assign(obj, branch), {})
+    };
 }
 
 module.exports = {objectMerge};
