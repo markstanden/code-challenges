@@ -29,16 +29,17 @@ function objectMerge(target, toMerge) {
         // and spread into (overwriting) existing top level object branches
         ...Object.keys(mergeBranch)
             .map((key) => {
+
                 let res = mergeBranch[key];
                 // iterate the keys of the merge branch
-                if (existingBranch.hasOwnProperty(key)) {
+                if (existingBranch.hasOwnProperty(key) && typeof existingBranch[key] === 'object') {
                     // existing branch already has this key
-                    if (typeof existingBranch[key] === 'object') {
-                        // and it is an Object, so may have internal branches
-                        res = objectMerge(existingBranch[key], mergeBranch[key]);
-                    }
+                    // and it is an Object, so may have internal branches
+                    res = objectMerge(existingBranch[key], mergeBranch[key]);
                 }
-                // res does not have the key yet
+                // else
+                // res either does not have the key yet,
+                // or it is a value, so we should assign it
                 return {[key]: res};
 
                 // reduce the array of edited branches into a single object
