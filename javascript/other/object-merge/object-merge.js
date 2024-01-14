@@ -13,28 +13,34 @@
  * the supplied keys/values in the merge object altered/added
  * does not remove data from the original unless overwritten.
  * @param {object} target
- * @param {object} addition
+ * @param {object} toMerge
  * @return {object}
  */
-function objectMerge(target, addition) {
-    const result = {
+function objectMerge(target, toMerge) {
+    // create a shallow clone of the branch
+    return {
         ...target,
-    };
-    const branch = (res, add) =>
-        Object.keys(res)
+        ...Object.keys(toMerge)
             .map((key) => {
-                if (add.hasOwnProperty(key)) {
-                    if (add[key] === typeof Object) {
-                        branch(res[key], add[key]);
-                    } else {
-                        return { [key] : add[key] };
-                    }
-                } else {
-                    return { key: res[key] };
-                }
-            });
+                let res = toMerge[key];
+                // iterate the keys of the merge branch
+                if (target.hasOwnProperty(key)) {
+                    // existing branch already has this key
 
-    return branch(result, addition)[0];
+                    if (typeof target[key] === 'object') {
+                        // and it is an Object, so may have internal branches
+                        res = objectMerge(target[key], toMerge[key]);
+
+                    } else {
+                        // not an object, so update the value
+                        res = toMerge[key];
+                    }
+
+                }
+                    // res does not have the key yet
+                    return {[key]: res};
+            }).at(0)
+    }
 }
 
 module.exports = {objectMerge};
