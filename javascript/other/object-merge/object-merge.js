@@ -21,8 +21,8 @@ function objectMerge(target, toMerge) {
 
     /**
      * Merges an object into another object
-     * @param existingBranch
-     * @param mergeBranch
+     * @param {object} existingBranch
+     * @param {object} mergeBranch
      * @return {object}
      */
     function merge(existingBranch, mergeBranch) {
@@ -34,11 +34,20 @@ function objectMerge(target, toMerge) {
                             ? {[key]: objectMerge(existingBranch[key], mergeBranch[key])}
                             : {[key]: mergeBranch[key]}
 
-                ).reduce((obj, branch) => ({...obj, ...branch}), {})
+                ).reduce(destructivelyMerge, {})
         };
     }
 
-
+    /**
+     * Returns an object where top level branches in existingBranch
+     * are replaced with top-level branches in mergeBranch
+     * @param {object} existingBranch
+     * @param {object} mergeBranch
+     * @return {object}
+     */
+    function destructivelyMerge(existingBranch, mergeBranch) {
+        return {...existingBranch, ...mergeBranch}
+    }
 }
 
 module.exports = {objectMerge};
