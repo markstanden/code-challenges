@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "other/_js",
+    "outDir": "other/build",
     "rootDir": "other",
     "target": "ES2018",
     "useDefineForClassFields": true,
