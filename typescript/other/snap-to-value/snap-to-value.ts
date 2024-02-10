@@ -14,6 +14,10 @@ function getSnapValues(increments: number): number[] {
 /**
  * Returns an array of boundary values based on the supplied ordered snap values.
  * each boundary value is the midpoint between consecutive snap values.
+ * e.g. the snap values for quarter snapping:
+ * [0, 0.25, 0.5, 0.75, 1]
+ * would produce the following boundaries:
+ * [0.125, 0.375, 0.625, 0.875]
  * @param {number[]} snapValues
  */
 function getBoundaryValues(snapValues: number[]): number[] {
