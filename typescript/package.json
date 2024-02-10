@@ -17,6 +17,7 @@
     "@types/ramda": "0.29.10",
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
+    "@vitest/coverage-v8": "^1.2.2",
     "eslint": "latest",
     "eslint-config-prettier": "latest",
     "eslint-import-resolver-typescript": "latest",

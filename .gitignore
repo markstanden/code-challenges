@@ -27,6 +27,7 @@
 
 # Log file
 *.log
+*.tsbuildinfo
 
 # BlueJ files
 *.ctxt
